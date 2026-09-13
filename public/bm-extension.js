@@ -1,8 +1,5 @@
 (() => {
-  const BM_START = new Date(2026, 8, 9);
-  BM_START.setHours(0, 0, 0, 0);
-
-  function filterCsvFromBMStart(csvText) {
+  function filterCsvToValidPlans(csvText) {
     const lines = csvText.replace(/\r/g, "").split("\n");
     if (lines.length < 2) return csvText;
 
@@ -14,7 +11,7 @@
       if (!line.trim()) return false;
       const values = parseCsvLine(line);
       const date = parseExportDate(values[dateColumn]);
-      return date && date >= BM_START;
+      return Boolean(date);
     });
 
     return [lines[0], ...filteredRows].join("\n");
@@ -31,7 +28,7 @@
       url.includes("format=csv")
     ) {
       const csvText = await response.clone().text();
-      const filteredCsv = filterCsvFromBMStart(csvText);
+      const filteredCsv = filterCsvToValidPlans(csvText);
       const headers = new Headers(response.headers);
       headers.set("Content-Type", "text/csv; charset=utf-8");
       headers.set("Cache-Control", "no-store");
@@ -67,7 +64,7 @@
     ["overdueTableBody", "todayTableBody"].forEach((id) => {
       document.querySelectorAll("#" + id + " tr").forEach((row) => {
         const date = parseShortDate(row.cells?.[2]?.textContent);
-        appendBM(row, date && date >= BM_START);
+        appendBM(row, Boolean(date));
       });
     });
 
@@ -77,7 +74,7 @@
       const date = new Date();
       date.setHours(0, 0, 0, 0);
       date.setDate(date.getDate() + days);
-      appendBM(row, date >= BM_START);
+      appendBM(row, true);
     });
   }
 
@@ -117,7 +114,7 @@
       const dateCell = sheet[XLSX.utils.encode_cell({ r: row, c: dateCol })];
       const date = parseExportDate(dateCell?.v);
 
-      if (siteCell?.v && date && date >= BM_START) {
+      if (siteCell?.v && date) {
         const siteName = String(siteCell.v);
         if (!siteName.endsWith(" - BM")) {
           siteCell.v = siteName + " - BM";
@@ -208,7 +205,7 @@
         const status = field(row, ["cow status", "cowstatus", "site status", "status"]);
         const nextPlan = field(row, ["next fueling plan", "nextfuelingplan"]);
         const fuelingDate = parseExportDate(nextPlan);
-        const suffix = fuelingDate && fuelingDate >= BM_START ? " - BM" : "";
+        const suffix = fuelingDate ? " - BM" : "";
         return {
           "Site Name": site + suffix,
           "Region Name": region,
