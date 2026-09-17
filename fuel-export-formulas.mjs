@@ -74,8 +74,7 @@ function activeSite(row) {
 
 function exportRows(rows, XLSX) {
   const result = rows.filter(activeSite).map(row => ({
-    'Site Name': value(row, 'Site', 'SiteName', 'Site ID') +
-      (value(row, 'NextFuelingPlan', 'Next Fueling Plan') ? ' - BM' : ''),
+    'Site Name': value(row, 'Site', 'SiteName', 'Site ID'),
     'Region Name': value(row, 'Area', 'RegionName', 'Region'),
     'District Name': value(row, 'districtName', 'District'),
     'City Name': value(row, 'cityName', 'City'),
