@@ -129,7 +129,7 @@ function exportRows(rows, XLSX) {
   return workbook;
 }
 
-window.downloadExcel = async function downloadExcel() {
+window.exportFormulaPlan = async function exportFormulaPlan() {
   const button = document.getElementById('downloadBtn');
   if (button?.disabled) return;
   if (!window.XLSX) { alert('Excel library is still loading. Please try again.'); return; }
