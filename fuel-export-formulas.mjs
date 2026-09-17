@@ -69,14 +69,13 @@ function activeSite(row) {
   const status = value(row, 'COWStatus', 'COW Status', 'SiteStatus', 'Status').toUpperCase().replace(/[\s_-]/g, '');
   return ['ONAIR', 'INPROGRESS', 'ACTIVE', 'OPERATIONAL'].includes(status) &&
     value(row, 'Site', 'SiteName', 'Site ID') &&
-    Number.isFinite(Number(value(row, 'lat', 'latitude'))) &&
-    Number.isFinite(Number(value(row, 'lng', 'longitude'))) &&
     matchesRegion(value(row, 'Area', 'RegionName', 'Region'));
 }
 
 function exportRows(rows, XLSX) {
   const result = rows.filter(activeSite).map(row => ({
-    'Site Name': value(row, 'Site', 'SiteName', 'Site ID'),
+    'Site Name': value(row, 'Site', 'SiteName', 'Site ID') +
+      (value(row, 'NextFuelingPlan', 'Next Fueling Plan') ? ' - BM' : ''),
     'Region Name': value(row, 'Area', 'RegionName', 'Region'),
     'District Name': value(row, 'districtName', 'District'),
     'City Name': value(row, 'cityName', 'City'),
