@@ -3174,3 +3174,21 @@ body {
 .discrepancy-tab-pane.active {
   display: block;
 }
+
+
+.bm-fueling-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 7px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #e32636;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  box-shadow: 0 1px 3px rgba(227, 38, 54, 0.25);
+}

@@ -8,8 +8,8 @@
   port = 3000
 
 [[redirects]]
-  from = "/new_central_plan/*"
-  to = "/new_central_plan/index.html"
+  from = "/cer-fuelplan/*"
+  to = "/cer-fuelplan/index.html"
   status = 200
 
 [[redirects]]
