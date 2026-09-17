@@ -69,8 +69,6 @@ function activeSite(row) {
   const status = value(row, 'COWStatus', 'COW Status', 'SiteStatus', 'Status').toUpperCase().replace(/[\s_-]/g, '');
   return ['ONAIR', 'INPROGRESS', 'ACTIVE', 'OPERATIONAL'].includes(status) &&
     value(row, 'Site', 'SiteName', 'Site ID') &&
-    Number.isFinite(Number(value(row, 'lat', 'latitude'))) &&
-    Number.isFinite(Number(value(row, 'lng', 'longitude'))) &&
     matchesRegion(value(row, 'Area', 'RegionName', 'Region'));
 }
 
