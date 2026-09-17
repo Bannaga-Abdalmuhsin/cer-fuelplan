@@ -256,7 +256,7 @@
           event.preventDefault();
           event.stopImmediatePropagation();
           try {
-            await exportPlanWithBM();
+            await window.exportFormulaPlan();
           } catch (error) {
             alert(error.message || "Failed to export the fuel plan");
           }
